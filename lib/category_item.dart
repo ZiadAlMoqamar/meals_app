@@ -10,10 +10,13 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridTile(
         child: Container(
-          
       decoration: BoxDecoration(
+        gradient: LinearGradient(
+            colors: [color!.withOpacity(0.3),color!.withOpacity(0.7), color!],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight),
         color: color,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        borderRadius:  const BorderRadius.all(Radius.circular(15)),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -23,8 +26,7 @@ class CategoryItem extends StatelessWidget {
           ),
         ],
       ),
-          
-          child: Text(title!),
+      child: Text(title!, style: Theme.of(context).textTheme.headline1,),
       padding: const EdgeInsets.all(15),
     ));
   }

@@ -9,20 +9,33 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              childAspectRatio: 3 / 2,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 20),
-          itemBuilder: (BuildContext ctx, int index) {
-            return CategoryItem(
-                title: dummyCategories![index].title,
-                color: dummyCategories![index].color);
-          },
-          itemCount: dummyCategories!.length,),
+    return Scaffold(
+      appBar: AppBar(
+        leading: const Icon(Icons.menu),
+        title: const Text("Categories"),
+      ),
+      body: GridView.builder(
+        padding: const EdgeInsets.all(15),
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 3 / 2,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20),
+        itemBuilder: (BuildContext ctx, int index) {
+          return CategoryItem(
+              title: dummyCategories![index].title,
+              color: dummyCategories![index].color);
+        },
+        itemCount: dummyCategories!.length,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.category_outlined), label: 'Categories'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.star_border_outlined), label: 'favourites')
+        ],
+      ),
     );
   }
 }
