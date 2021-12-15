@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meals_app/category_meals_screen.dart';
 
 class CategoryItem extends StatelessWidget {
   final String? title;
@@ -6,28 +8,36 @@ class CategoryItem extends StatelessWidget {
   const CategoryItem({Key? key, @required this.title, @required this.color})
       : super(key: key);
 
+  void selectCategory(BuildContext ctx){
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_){return const CategoryMealsScreen();}));
+  }
   @override
   Widget build(BuildContext context) {
     return GridTile(
-        child: Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [color!.withOpacity(0.3),color!.withOpacity(0.7), color!],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight),
-        color: color,
-        borderRadius:  const BorderRadius.all(Radius.circular(15)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Text(title!, style: Theme.of(context).textTheme.headline6,),
-      padding: const EdgeInsets.all(15),
-    ));
+        child: InkWell(
+          onTap: ()=>selectCategory(context),
+          splashColor: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(15),
+          child: Container(
+              decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [color!.withOpacity(0.3),color!.withOpacity(0.7), color!],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight),
+          color: color,
+          borderRadius:  const BorderRadius.all(Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+              ),
+              child: Text(title!, style: Theme.of(context).textTheme.headline6,),
+              padding: const EdgeInsets.all(15),
+            ),
+        ));
   }
 }
