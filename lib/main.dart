@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/categories_screen.dart';
+import 'package:meals_app/dummy_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Home Page'),
+      home: const MyHomePage(title: 'Categories'),
     );
   }
 }
@@ -37,14 +39,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const Icon(Icons.menu),
         title: Text(widget.title),
       ),
       body: const Center(
-        child:  Text(
-          'Navigation Time',
-        ),
+        child:  CategoriesScreen(dummyCategories: dummyCategories,)
       ),
-
+    bottomNavigationBar: BottomNavigationBar(items: const [
+      BottomNavigationBarItem(icon: Icon(Icons.category_outlined),label: 'Categories'),
+      BottomNavigationBarItem(icon: Icon(Icons.star_border_outlined), label: 'favourites')
+    ],),
     );
   }
 }
