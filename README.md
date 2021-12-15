@@ -1,6 +1,6 @@
 # meals_app
 
-A new Flutter project.
+Project on Max Flutter Course.
 
 ## Getting Started
 
