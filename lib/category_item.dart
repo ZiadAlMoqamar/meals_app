@@ -26,7 +26,7 @@ class CategoryItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(title!, style: Theme.of(context).textTheme.headline1,),
+      child: Text(title!, style: Theme.of(context).textTheme.headline6,),
       padding: const EdgeInsets.all(15),
     ));
   }
