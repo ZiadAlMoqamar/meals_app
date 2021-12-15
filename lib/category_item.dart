@@ -3,29 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/category_meals_screen.dart';
 
 class CategoryItem extends StatelessWidget {
+  final String? id;
   final String? title;
   final Color? color;
-  const CategoryItem({Key? key, @required this.title, @required this.color})
+  const CategoryItem(
+      {Key? key, @required this.title, @required this.color, @required this.id})
       : super(key: key);
 
-  void selectCategory(BuildContext ctx){
-    Navigator.of(ctx).push(MaterialPageRoute(builder: (_){return const CategoryMealsScreen();}));
+  void selectCategory(BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
+      return CategoryMealsScreen(
+        categoryTitle: title,
+        categoryId: id,
+      );
+    }));
   }
+
   @override
   Widget build(BuildContext context) {
     return GridTile(
         child: InkWell(
-          onTap: ()=>selectCategory(context),
-          splashColor: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(15),
-          child: Container(
-              decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [color!.withOpacity(0.3),color!.withOpacity(0.7), color!],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight),
+      onTap: () => selectCategory(context),
+      splashColor: Theme.of(context).primaryColor,
+      borderRadius: BorderRadius.circular(15),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            color!.withOpacity(0.3),
+            color!.withOpacity(0.7),
+            color!
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           color: color,
-          borderRadius:  const BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5),
@@ -34,10 +43,13 @@ class CategoryItem extends StatelessWidget {
               offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
-              ),
-              child: Text(title!, style: Theme.of(context).textTheme.headline6,),
-              padding: const EdgeInsets.all(15),
-            ),
-        ));
+        ),
+        child: Text(
+          title!,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        padding: const EdgeInsets.all(15),
+      ),
+    ));
   }
 }
