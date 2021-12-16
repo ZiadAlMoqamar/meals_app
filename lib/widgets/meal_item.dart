@@ -69,7 +69,7 @@ class MealItem extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -78,21 +78,21 @@ class MealItem extends StatelessWidget {
                     const SizedBox(
                       width: 2,
                     ),
-                    Text('$duration min'),
+                    FittedBox(child: Text('$duration min')),
                   ]),
                   Row(children: [
                     const Icon(Icons.work_outline_outlined),
                     const SizedBox(
                       width: 2,
                     ),
-                    Text('${complexity!.name}'),
+                    FittedBox(child: Text('${complexity!.name}')),
                   ]),
                   Row(children: [
                     const Icon(Icons.attach_money_outlined),
                     const SizedBox(
                       width: 2,
                     ),
-                    Text('${affordability!.name}')
+                    FittedBox(child: Text(affordability!.name))
                   ])
                 ],
               ),
