@@ -29,13 +29,23 @@ class MealDetailsScreen extends StatelessWidget {
       height: 250,
       width: 300,
       child: ListView.builder(
-        itemBuilder: (ctx, index) => Card(
-          margin: const EdgeInsets.all(8),
-          color: ThemeData.light().secondaryHeaderColor,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(list[index]),
-          ),
+        itemBuilder: (ctx, index) => Column(
+          children: [
+            ListTile(
+              leading: CircleAvatar(
+                child: FittedBox(
+                  child: Text('# ${index + 1}'),
+                ),
+              ),
+              contentPadding: const EdgeInsets.all(6),
+              
+              title: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(list[index]),
+              ),
+            ),
+            const Divider()
+          ],
         ),
         itemCount: list.length,
       ),
@@ -50,8 +60,9 @@ class MealDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(selectedMeal.title),
       ),
-      body: ListView(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
+        child: Column(   
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
@@ -67,7 +78,7 @@ class MealDetailsScreen extends StatelessWidget {
           buildSectionTitle(context, 'Steps'),
           buildListViewBuilder(context, selectedMeal.steps)
         ],
-      ),
+      ),),
     );
   }
 }
