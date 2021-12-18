@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:meals_app/dummy_data.dart';
+import 'package:meals_app/screens/tabs_screen.dart';
 
 import './screens/meal_details_screen.dart';
 import './screens/categories_screen.dart';
@@ -35,9 +36,9 @@ class MyApp extends StatelessWidget {
                   fontFamily: 'RobotoCondensed'))),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => const CategoriesScreen(dummyCategories: dummyCategories),
+        '/': (ctx) => const TabsScreen(),
         CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(),
-        MealDetailsScreen.routeName: (ctx) => MealDetailsScreen(),
+        MealDetailsScreen.routeName: (ctx) => const MealDetailsScreen(),
       },
       
       //for any error in routing it will go there

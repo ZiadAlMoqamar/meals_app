@@ -11,10 +11,7 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(Icons.menu),
-        title: const Text("DeliMeal"),
-      ),
+      
       body: GridView.builder(
         padding: const EdgeInsets.all(15),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -29,14 +26,6 @@ class CategoriesScreen extends StatelessWidget {
               id: dummyCategories![index].id,);
         },
         itemCount: dummyCategories!.length,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.category_outlined), label: 'Categories'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.star_border_outlined), label: 'favourites')
-        ],
       ),
     );
   }
