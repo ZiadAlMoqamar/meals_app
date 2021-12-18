@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './favourite_screen.dart';
 import './categories_screen.dart';
 
+import '../widgets/main_drawer.dart';
 import '../dummy_data.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -30,8 +31,8 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: MainDrawer(),
       appBar: AppBar(
-        leading: const Icon(Icons.menu),
         title: Text(_pages[_selectedIndex]['title'] as String),
       ),
       body: _pages[_selectedIndex]['page'] as Widget,
@@ -40,8 +41,8 @@ class _TabsScreenState extends State<TabsScreen> {
         currentIndex: _selectedIndex,
         backgroundColor: Theme.of(context).primaryColor,
         unselectedIconTheme:
-            IconThemeData(color: const ColorScheme.light().secondary),
-        selectedItemColor: const ColorScheme.light().primaryVariant,
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
+        selectedItemColor: Theme.of(context).colorScheme.primary,
         type: BottomNavigationBarType.shifting,
         items: const [
           BottomNavigationBarItem(
