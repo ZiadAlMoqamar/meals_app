@@ -9,6 +9,7 @@ import './screens/categories_screen.dart';
 import './screens/category_meals_screen.dart';
 
 import './models/meal.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -21,35 +22,54 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Map<String,bool>? _filters={
-    'gluten' :false,
-    'lactose' :false,
-    'vegan':false,
-    'vegetarian':false,
+  Map<String, bool>? _filters = {
+    'gluten': false,
+    'lactose': false,
+    'vegan': false,
+    'vegetarian': false,
   };
   List<Meal> _availableMeals = dummyMeals;
-  //List<Meal> _favoritemeals;
-  void _setFilters(Map<String,bool> filterData ){
+  List<Meal> _favoriteMeals = [];
+  void _setFilters(Map<String, bool> filterData) {
     setState(() {
-      _filters =filterData;
+      _filters = filterData;
 
-      _availableMeals= dummyMeals.where((meal) {
-        if(_filters!['gluten']! && !meal.isGlutenFree){
+      _availableMeals = dummyMeals.where((meal) {
+        if (_filters!['gluten']! && !meal.isGlutenFree) {
           return false;
         }
-        if(_filters!['lactose']! && !meal.isLactoseFree){
+        if (_filters!['lactose']! && !meal.isLactoseFree) {
           return false;
         }
-        if(_filters!['vegan']! && !meal.isVegan){
+        if (_filters!['vegan']! && !meal.isVegan) {
           return false;
         }
-        if(_filters!['vegetarian']! && !meal.isVegetarian){
+        if (_filters!['vegetarian']! && !meal.isVegetarian) {
           return false;
         }
         return true;
       }).toList();
     });
   }
+
+  void _toggleFavorite(String mealId) {
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals.add(dummyMeals.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isMealFavorite(String id) {
+    return _favoriteMeals.any((meal) => meal.id == id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -72,18 +92,26 @@ class _MyAppState extends State<MyApp> {
                   fontFamily: 'RobotoCondensed'))),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => const TabsScreen(),
-        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(availableMeals: _availableMeals,),
-        MealDetailsScreen.routeName: (ctx) => const MealDetailsScreen(),
-        FiltersScreen.routeName: (ctx) =>  FiltersScreen(currentFilters: _filters,saveFilters: _setFilters,)
+        '/': (ctx) => TabsScreen(
+              favoriteMeals: _favoriteMeals,
+            ),
+        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(
+              availableMeals: _availableMeals,
+            ),
+        MealDetailsScreen.routeName: (ctx) => MealDetailsScreen(
+              toggleFavorite: _toggleFavorite,
+              isFavoriteMeal: _isMealFavorite,
+            ),
+        FiltersScreen.routeName: (ctx) => FiltersScreen(
+              currentFilters: _filters,
+              saveFilters: _setFilters,
+            )
       },
-      
+
       //for any error in routing it will go there
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (ctx) => const CategoriesScreen(
-            dummyCategories: dummyCategories,
-          ),
+          builder: (ctx) => TabsScreen(favoriteMeals: _favoriteMeals),
         );
       },
     );

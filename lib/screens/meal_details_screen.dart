@@ -4,7 +4,11 @@ import '../dummy_data.dart';
 
 class MealDetailsScreen extends StatelessWidget {
   static const routeName = '/meal-details';
-  const MealDetailsScreen({Key? key}) : super(key: key);
+  final Function toggleFavorite;
+  final Function isFavoriteMeal;
+  MealDetailsScreen(
+      {Key? key, required this.toggleFavorite, required this.isFavoriteMeal})
+      : super(key: key);
 
   Widget buildSectionTitle(BuildContext context, String title) {
     return Center(
@@ -38,7 +42,6 @@ class MealDetailsScreen extends StatelessWidget {
                 ),
               ),
               contentPadding: const EdgeInsets.all(6),
-              
               title: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(list[index]),
@@ -57,28 +60,33 @@ class MealDetailsScreen extends StatelessWidget {
     final mealId = ModalRoute.of(context)!.settings.arguments as String;
     final selectedMeal = dummyMeals.firstWhere((meal) => meal.id == mealId);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(isFavoriteMeal(mealId) ? Icons.star : Icons.star_border),
+        onPressed: () => toggleFavorite(mealId),
+      ),
       appBar: AppBar(
         title: Text(selectedMeal.title),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
-        child: Column(   
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              selectedMeal.imageUrl,
-              height: 300,
-              width: double.infinity,
-              fit: BoxFit.cover,
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                selectedMeal.imageUrl,
+                height: 300,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          buildSectionTitle(context, 'Ingredients'),
-          buildListViewBuilder(context, selectedMeal.ingredients),
-          buildSectionTitle(context, 'Steps'),
-          buildListViewBuilder(context, selectedMeal.steps)
-        ],
-      ),),
+            buildSectionTitle(context, 'Ingredients'),
+            buildListViewBuilder(context, selectedMeal.ingredients),
+            buildSectionTitle(context, 'Steps'),
+            buildListViewBuilder(context, selectedMeal.steps)
+          ],
+        ),
+      ),
     );
   }
 }
