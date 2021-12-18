@@ -3,8 +3,10 @@ import '../widgets/main_drawer.dart';
 
 class FiltersScreen extends StatefulWidget {
   static const routeName = '/filters';
-  const FiltersScreen({ Key? key }) : super(key: key);
-
+  final Function saveFilters;
+  final Map<String,bool>? currentFilters;
+  const FiltersScreen({ Key? key,required this.currentFilters,required this.saveFilters }) : super(key: key);
+  
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
 }
@@ -15,6 +17,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _vegan = false;
   var _lactoseFree = false;
 
+  @override
+  initState(){
+    _glutenFree = widget.currentFilters!['gluten'] as bool;
+    _lactoseFree = widget.currentFilters!['lactose'] as bool;
+    _vegan = widget.currentFilters!['vegan'] as bool;
+    _vegetarian = widget.currentFilters!['vegetarian'] as bool;
+    super.initState();
+  }
   Widget buildSwitchTile(String title, String subtitle, bool currentValue,  Function(bool newValue) updateValue){
     return SwitchListTile(title:  Text(title),
               value: currentValue,
@@ -27,6 +37,14 @@ class _FiltersScreenState extends State<FiltersScreen> {
       drawer: const MainDrawer(),
       appBar: AppBar(
         title: const Text('Your Filters'),
+        actions: [IconButton(icon:const Icon(Icons.save),onPressed: (){
+          final selectedFilters = {
+            'gluten' :_glutenFree,
+            'lactose' :_lactoseFree,
+            'vegan': _vegan,
+            'vegetarian':_vegetarian,
+          };
+          widget.saveFilters(selectedFilters);},)],
       ),
       body: Column(
         children: [
@@ -42,7 +60,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 _glutenFree =newValue;
                 });
               }),
-              buildSwitchTile('Vegeterian-free', 'Only include vegetarian meals', _vegetarian, (newValue){
+              buildSwitchTile('Vegeterian', 'Only include vegetarian meals', _vegetarian, (newValue){
                 setState(() {
                 _vegetarian =newValue;
                 });
